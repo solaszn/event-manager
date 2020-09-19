@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Events - Twitter</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!------ Include the above in your HEAD tag ---------->
+	
+	<style type="text/css">
+		.official{
+			color: #DC143C;
+		}
+		.personal{
+			color: #6495ED;
+		}
+		.occassional{
+			color: #00FF00;
+		}
+		body{
+			font-family: 'Roboto';
+			font-size: 12px;
+			color: #fff;
+		}
+		a{
+			color: inherit;
+		}
+		a:hover{
+			text-decoration: none;
+			color: inherit;
+		}
+		.left-nav{
+			width: 18%;
+			height: 100%;
+			position: fixed;
+			top: 0%;
+			background: #000;
+			color: #fff;
+		}
+		.left-nav .left{
+			padding: 20px;
+			width: 100%;
+			height: 100%;
+		}
+		.left-nav .left .navbar-brand{
+			letter-spacing: 0.2em;
+			font-weight: lighter;
+			width: 100%;
+			font-size: 1.2rem;
+			text-align: center;
+		}
+		.left-nav .left #user{
+			width: 100%;
+			text-align: center;
+			margin: 1rem 0rem;
+		}
+		.left-nav .left #img-user{
+			font-size: 32px;
+			font-weight: lighter;
+		}
+		.left-nav .left #user h4{
+			padding-top: 10px;
+			font-size: 15px;
+			letter-spacing: 2px;
+		}
+		ul li{
+			list-style: none;
+		}
+		.left-nav .left .side{
+			width: 100%;
+			padding: 10px 0px;
+			margin: 0px;
+		}
+		.left-nav .left .side li:hover, .left-nav .left .below-side li:hover{
+			background: #202020;
+			border-radius: 15px;
+			transition: 0.5s;
+		}
+		.left-nav .left .side li, .left-nav .left .below-side li{
+			width: 100%;
+			height: 40px;
+			padding-top: 5px;
+			text-align: left;
+			font-size: 15px;
+			letter-spacing: 2px;
+			font-weight: lighter;
+			margin: 20px 0px;
+		}
+		.left-nav .left .side li span, .left-nav .left .below-side li span{
+			margin: 2px 30px;
+			vertical-align: middle;
+		}
+		.below-side{
+			width: 15%;
+			padding: 10px 0px;
+			margin: 0px;
+			position: fixed;
+			bottom: 0%;
+		}
+		.below-side li{
+			width: 100%;
+		}
+		/**/
+		.mid-heat .containeer{
+			position: relative;
+			top: 40px;
+			left: 18%;
+			width: 62%;
+			padding: 0px 20px;
+			height: 90%;
+		}
+		.mid-heat .containeer .heat{
+			margin-top: 1rem;
+			width: 60%;
+			position: relative;
+			left: 20%;
+		}
+		.mid-heat .containeer .formcard{
+			width: 160px;
+			height: 70px;
+		    position: relative;
+    		left: 4%;
+
+			border-radius: 20px;
+		}
+		.events-card{
+			background: #000;
+			color: #fff;
+		}
+		.task-card{
+			background: #00C271;
+			color: #fff;
+		}
+		.events-card:hover{
+			border: 1px solid #00C271;
+			color: #000;
+			background: #fff;
+			box-shadow: 8px 8px 8px 0px rgba(0,0,0,0.25);
+			transition: 0.5s;
+		}
+		.task-card:hover{
+			border: 1px solid #00C271;
+			color: #000;
+			background: #fff;
+			box-shadow: 8px 8px 8px 0px rgba(0,0,0,0.25);
+			transition: 0.5s;
+		}
+		.mid-heat .containeer .formcard a p{
+		    text-align: center;
+		    position: relative;
+		    top: 12px;
+		    left: 10px;
+		    font-size: 15px;
+		    font-weight: bold;
+		}
+		.mid-heat .containeer .formcard a span{
+		    position: absolute;
+		    font-size: 32px;
+		    left: 23px;
+		    top: 18px;
+		}
+		.mid-heat .containeer .scheduled, .mid-heat .containeer .completed{
+			margin: 3rem 1rem;
+			height: 180px;
+			overflow-x: scroll;
+		}
+		.mid-heat .containeer .scheduled .head-tag, .mid-heat .containeer .completed .head-tag{
+			color: #000;
+			font-size: 15px;
+			letter-spacing: 0.2em;
+			position: static;
+			text-transform: uppercase;
+			font-weight: bold;
+			margin-bottom: 15px;
+		}
+		.mid-heat .containeer .scheduled .card{
+			width: 175px;
+			height: 100px;
+			border-radius: 30px;
+			background: #000;
+			padding: 0px;
+		}
+		.mid-heat .containeer .completed .card{
+			width: 200px;
+			height: 100px;
+			border-radius: 30px;
+			background: #00C271;
+			padding: 0px;
+		}
+		.mid-heat .containeer .scheduled .col-md-4, .mid-heat .containeer .completed .col-md-4{}
+		.mid-heat .containeer .scheduled p, .mid-heat .containeer .completed p{
+			width: 100%;
+			text-align: center;
+		}
+		.mid-heat .containeer .scheduled .event-name, .mid-heat .containeer .completed .event-name{
+			font-weight: bold;
+			font-size: 10px;
+			padding-top: 5px;
+			letter-spacing: 2px;
+		}
+		.mid-heat .containeer .scheduled .event-date, .mid-heat .containeer .completed .event-date{
+			font-size: 12px;
+		}
+		.right{
+			width: 20%;
+			height: 100%;
+			background: #000;
+			color: #fff;
+			font-size: 12px;
+			position: fixed;
+			left: 80%;
+			top: 0px;
+		}
+		.right .event-list{
+			padding: 30px;
+		}
+		.right .quick-tips{
+			margin-top: 0.5rem;
+		}
+		.right .today-date{
+			width: 100%;
+			height: 30px;
+			padding: 5px;
+			text-align: center;
+			background: #202020;
+			border-radius: 15px;
+		}
+		.right h4{
+			margin-top: 30px;
+			letter-spacing: 2px;
+			font-weight: bold;
+			text-transform: uppercase;
+			width: 100%;
+			text-align: center;
+			font-size: 12px;
+		}
+		.right .text{
+			width: 100%;
+			height: 50px;
+			padding: 10px;
+			text-align: center;
+			background: #202020;
+			border-radius: 15px;
+			overflow: hidden;
+		}
+		.right .text span{
+			position: absolute;
+			left: 15%;
+		}
+		.right .text:hover{
+			color: #ffd400;
+			transition: 0.5s;
+		}
+		.right .text p{
+			position: relative;
+			left: 15%;
+			text-align: left;
+		}
+		.right #list ul{
+			padding: 0px;
+			margin: 0px;
+		}
+		.right #list #beaut li{
+			width: 100%;
+			height: 60px;
+			padding: 10px;
+			text-align: center;
+			background: #202020;
+			font-size: 12px;
+			margin: 1rem 0rem;
+			border-radius: 15px;
+			overflow: hidden;
+			vertical-align: middle;
+			text-align: left;
+		}
+		.right #list #beaut li span{
+			font-size: 12px;
+			position: absolute;
+			vertical-align: middle;
+			left: 17%;
+		}
+		.right #list #beaut li a{
+			position: relative;
+			left: 15%;
+		}
+		.right #list #beaut li p{
+			text-align: right;
+			position: initial;
+			margin-top: 5px;
+			right: 0%;
+			bottom: 0%;
+		}
+		.twitter:hover{
+			color: #00ACEE;
+			transition: 0.5s;
+		}
+	</style>
+</head>
+<body>
+
+	<!-- <nav class="navbar">
+  		<a class="navbar-brand" href="#">PLUG XYZ</a>
+	</nav> -->
+
+	<section class="left-nav">
+		<div class="left">
+			<a class="navbar-brand" href="#">PLUG XYZ</a>
+			<div id="user">
+				<span id="img-user" class="material-icons">perm_identity</span>
+				<h4>Hello User</h4>
+			</div>
+			<ul class="side">
+				<li><span class="material-icons">event</span><a href="#">Events</a></li>
+				<li><span class="material-icons">donut_large</span><a href="#">Reports</a></li>
+				<li><span class="material-icons">emoji_objects</span><a href="#">Quick Tips</a></li>
+				<li style="text-align: center; width: 100%;"><a class="twitter" target="_blank" href="https://twitter.com/solaszn"><i style="font-size: 24px;" class="fa fa-twitter" aria-hidden="true"></i></a></li>
+			</ul>
+			<ul class="below-side">
+				<li><span class="material-icons">power_settings_new</span><a href="/logout">Log Out</a></li>
+			</ul>
+		</div>
+	</section>
+
+	
+	<section class="mid-heat">
+		
+		<div class="containeer">
+			<div class="heat">
+				<div class="addbook row">
+					<div class="add-event col-md-6">
+						<div class="formcard events-card">
+							<a href="#" data-target="#ad" data-toggle="modal"><p>Add <br> Events</p>
+							<span class="material-icons">add</span></a>
+
+							<div id="ad" class="modal fade" role="dialog">
+							  <div class="modal-dialog">
+							    
+							    <div class="modal-content">
+									<div class="modal-body">
+									    <button data-dismiss="modal" class="close">&times;</button>
+									    <h4>Date of Event</h4>
+									    <form method="post" action="">
+									    	<section class="container mt-2" style="height: 70px;">
+												<input style="height: 50px; border-radius: 15px; border: 1px solid #000; padding: 5px; margin-top: 10px; font-size: 15px;" type="datetime-local" name="event" required="required">
+												<input style="border-radius: 30px; background: #000; border: none; height: 50px; margin-left: 30px; width: 100px; color: #fff; font-size: 15px;" type="submit" value="Schedule">
+											</section>
+									    </form>
+									  </div>
+									</div>
+								</div>  
+							</div>
+						</div>
+					</div>
+
+					<div class="addtask col-md-6">
+						<div class="formcard task-card">
+							<a href="#" data-target="#add" data-toggle="modal"><p>Add <br> Tasks</p>
+							<span class="material-icons">add</span></a>
+
+							<div id="add" class="modal fade" role="dialog">
+							  <div class="modal-dialog">
+							    
+							    <div class="modal-content">
+									<div class="modal-body">
+									    <button data-dismiss="modal" class="close">&times;</button>
+									    <h4>Date and Time of Task</h4>
+									    <form method="post" action="">
+									    	<section class="container mt-2" style="height: 70px; border-radius: 30px;">
+												<input style="height: 50px; border-radius: 15px; border: 1px solid #000; padding: 5px; margin-top: 10px; font-size: 15px;" type="datetime-local" name="task" required="required">
+												<input style="border-radius: 30px; background: #000; border: none; height: 50px; margin-left: 30px; width: 100px; color: #fff; font-size: 15px;" type="submit" value="Schedule">
+											</section>
+									    </form>
+									  </div>
+									</div>
+								</div>  
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="scheduled">
+				<div class="head-tag">Next Up</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="card">
+							<p class="event-name">Inspector Check</p>
+							<p class="event-date">12th September, 2022</p>
+							<p class="event-type personal"><span class="material-icons" style="font-size: 12px;">fiber_manual_record</span></p>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="card">
+							<p class="event-name">Inspector Check</p>
+							<p class="event-date">12th September, 2022</p>
+							<p class="event-type occassional"><span class="material-icons" style="font-size: 12px;">fiber_manual_record</span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="completed">
+				<div class="head-tag">Completed</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="card">
+							<p class="event-name">Inspector Check</p>
+							<p class="event-date">12th September, 2022</p>
+							<p class="event-type">Occassional</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<sectiion class="right">
+		<div class="event-list">
+			<div class="quick-tips">
+				<div class="today-date">
+					<p>Today is 12th September, 2020.</p>
+				</div>
+				<h4>Tip of the Day</h4>
+				<div class="text">
+					<span class="material-icons">emoji_objects</span>
+					<p>agna aliqua. Ut enim ad minim veniam,
+					quis nostrud.</p>
+				</div>
+			</div>
+			<div id="list">
+				<h4>Tasks</h4>
+				<div id="beaut">
+					<ul>
+						<li>
+							<span class="material-icons personal">fiber_manual_record</span>
+							<a href="#">Lorem ipsum dolor sit.</a>
+							<p>21st October, 2020</p>
+						</li>
+						<li>
+							<span class="material-icons occassional">fiber_manual_record</span>
+							<a href="#">Lorem ipsum dolor sit.</a>
+							<p>21st October, 2020</p>
+						</li>
+						<li>
+							<span class="material-icons official">fiber_manual_record</span>
+							<a href="#">Lorem ipsum dolor.</a>
+							<p>21st October, 2020</p>
+						</li>
+						<li>
+							<span class="material-icons personal">fiber_manual_record</span>
+							<a href="#">Lorem ipsum dolor..</a>
+							<p>21st October, 2020</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</sectiion>
+	
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jtsage-datebox-bootstrap4@5.3.3/jtsage-datebox.min.js"></script>
+</body>
+</html>
